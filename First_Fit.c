@@ -1,59 +1,52 @@
 #include <stdio.h>
-#include <conio.h>
-#define max 25
+#define MAX 25
 
 int main()
 {
-    int frag[max], block[max], jobs[max], i, j, nb, nj, temp, bf[max], ff[max];
+    int frag[MAX], b[MAX], f[MAX], i, j, nb, nf, temp;
+    static int bf[MAX], ff[MAX];
 
-    printf("Memory Management Scheme - First Fit\n");
-    printf("Enter the number of blocks: ");
+    printf("\nEnter the number of blocks:");
     scanf("%d", &nb);
 
-    printf("Enter the number of jobs: ");
-    scanf("%d", &nj);
+    printf("Enter the number of files:");
+    scanf("%d", &nf);
 
-    printf("Enter the size of blocks --> \n");
-    for (i = 0; i < nb; i++)
+    printf("\nEnter the size of the blocks:\n");
+    for (i = 1; i <= nb; i++)
     {
-        printf("Block %d: ", i + 1);
-        scanf("%d", &block[i]);
-        bf[i] = 0;
+        printf("Block %d:", i);
+        scanf("%d", &b[i]);
     }
 
-    printf("Enter the size of jobs --> \n");
-    for (i = 0; i < nj; i++)
+    printf("Enter the size of the files:\n");
+    for (i = 1; i <= nf; i++)
     {
-        printf("Job %d: ", i + 1);
-        scanf("%d", &jobs[i]);
+        printf("File %d:", i);
+        scanf("%d", &f[i]);
     }
 
-    for (i = 0; i < nj; i++)
+    for (i = 1; i <= nf; i++)
     {
-        temp = -1;
-        for (j = 0; j < nb; j++)
+        for (j = 1; j <= nb; j++)
         {
-            if (bf[j] == 0)
+            if (bf[j] != 1)
             {
-                temp = block[j] - jobs[i];
+                temp = b[j] - f[i];
                 if (temp >= 0)
                 {
                     ff[i] = j;
-
                     break;
                 }
             }
         }
-
         frag[i] = temp;
-        bf[ff[i]] = 1; // Mark the block as allocated
+        bf[ff[i]] = 1;
     }
 
-    printf("Job No \t Job Size \t Block No \t Block Size \t Fragment\n");
-    for (i = 0; i < nj; i++)
-    {
-        printf("%d \t\t %d \t\t %d \t\t %d \t\t %d \n", i + 1, jobs[i], ff[i], block[ff[i]], frag[i]);
-    }
+    printf("\nFile_no \tFile_size \tBlock_no \tBlock_size \tFragment");
+    for (i = 1; i <= nf; i++)
+        printf("\n%d\t\t%d\t\t%d\t\t%d\t\t%d", i, f[i], ff[i], b[ff[i]], frag[i]);
 
     return 0;
 }
