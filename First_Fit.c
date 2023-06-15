@@ -4,10 +4,9 @@
 
 int main()
 {
+    int frag[max], block[max], jobs[max], i, j, nb, nj, temp, bf[max], ff[max];
 
-    int frag[max], block[max], jobs[max], i, j, nb, nj, temp, bf[max], jf[max];
-
-    printf("Memory Management Scheme - First Fit \n");
+    printf("Memory Management Scheme - First Fit\n");
     printf("Enter the number of blocks: ");
     scanf("%d", &nb);
 
@@ -31,27 +30,29 @@ int main()
 
     for (i = 0; i < nj; i++)
     {
+        temp = -1;
         for (j = 0; j < nb; j++)
         {
             if (bf[j] == 0)
             {
                 temp = block[j] - jobs[i];
-                if (temp > 0)
+                if (temp >= 0)
                 {
-                    jf[i] = j;
+                    ff[i] = j;
+
                     break;
                 }
             }
         }
 
         frag[i] = temp;
-        bf[j] = 1;
+        bf[ff[i]] = 1; // Mark the block as allocated
     }
 
     printf("Job No \t Job Size \t Block No \t Block Size \t Fragment\n");
     for (i = 0; i < nj; i++)
     {
-        printf("%d \t\t %d \t\t %d \t\t %d \t\t %d \n", i + 1, jobs[i], jf[i], block[jf[i]], frag[i]);
+        printf("%d \t\t %d \t\t %d \t\t %d \t\t %d \n", i + 1, jobs[i], ff[i], block[ff[i]], frag[i]);
     }
 
     return 0;
